@@ -41,6 +41,7 @@ Retrieve the contents of the specified file located within /var/log.  The conten
 | header | description | required | default |
 |--------|-------------|----------|---------|
 | Accept | The desired format for the response.  | no | defaults to application/json. Accepted values are `application/json` and `text/html` |
+| Authorization | Basic auth header for access control.  For purposes of this demo, username `admin` and password `cribl` | yes | n/a |
 
 #### Results
 200 OK:
@@ -48,7 +49,7 @@ Retrieve the contents of the specified file located within /var/log.  The conten
 ```json
 {
     "file":"system.log",
-    "host":"Kosm.local,
+    "host":"Kosm.local",
     "logs": [
         ...
     ]

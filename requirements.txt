@@ -1,3 +1,4 @@
 Flask
 flask-accept
+flask_httpauth
 pytest
