@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from services.log_services import LogService
 
-logs_view = Blueprint('logs', __name__)
+views = Blueprint('logs', __name__)
 
 """
 Support hard-coded credential authorization.  In the real deal maybe we'd be
@@ -60,7 +60,7 @@ def collect_args(file, args):
 """
 Our supported routes.
 """
-@logs_view.route('/v1/logs/<file>')
+@views.route('/v1/logs/<file>')
 @accept_fallback
 @auth.login_required
 def logs_json(file):

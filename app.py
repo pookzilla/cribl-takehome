@@ -1,12 +1,12 @@
 import os
 from flask import Flask
-from views.v1.logs import logs_view
+from views.v1.log_views import views
 import socket
 
 
 def create_app():
     app = Flask(__name__)
-    app.register_blueprint(logs_view)
+    app.register_blueprint(views)
 
     # let the host name be configurable for cases where gethostname doesn't
     # provide the value you're hoping for
