@@ -41,7 +41,10 @@ def collect_args(file, args):
     """
     Process and validate all provided query arguments (if any.)
     """
-    search = args.get("search", default=None, type=str)
+    search_str = args.get("search", default=None, type=str)
+    search = None
+    if search_str is not None:
+        search = search_str.split(',')
     limit_str = args.get("limit", default=None)
     limit = None
     if limit_str is not None:
@@ -60,7 +63,7 @@ def collect_args(file, args):
 """
 Our supported routes.
 """
-@views.route('/v1/logs/<file>')
+@views.route('/v1/logs/<path:file>')
 @accept_fallback
 @auth.login_required
 def logs_json(file):

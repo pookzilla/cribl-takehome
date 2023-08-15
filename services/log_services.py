@@ -23,7 +23,7 @@ class LogService():
         if not sanitized_file:
             return None
 
-        logs = load_logs(sanitized_file, limit)
+        logs = load_logs(sanitized_file, search, limit)
 
         return LogResult(file, self.hostname, logs)
 
@@ -41,7 +41,7 @@ class LogService():
             return None
 
 
-def load_logs(filename, limit):
+def load_logs(filename, search, limit):
     """
     Responsible for file handle lifecycle and parameter logic.
     """
@@ -51,8 +51,13 @@ def load_logs(filename, limit):
         for line in reverse_lines(file):
             if limit is None or (limit is not None and i < limit):
                 if line != '':  # skip empty lines
-                    yield line
-                    i += 1
+                    if search is not None:
+                        if any(ele in line for ele in search):
+                            yield line
+                            i += 1
+                    else:
+                        yield line
+                        i += 1
             else:
                 break
     finally:

@@ -35,7 +35,7 @@ Retrieve the contents of the specified file located within /var/log.  The conten
 |argument|description|required|default|
 |--------|-----------|--------|-------|
 | file | the filename within /var/log to retrieve | yes | n/a|
-| search | the keywords that must be present within a log line in order for it to be returned | no | return all lines |
+| search | the comma separted list of keywords that must be present within a log line in order for it to be returned.  Provided any one of the keywords is present the line is returned | no | return all lines |
 | limit | the maximum number of entries to return | no | all |
 
 | header | description | required | default |
