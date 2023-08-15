@@ -29,14 +29,14 @@ pytest -rP
 ## API
 This project supports the following API:
 
-### GET v1/logs/{file}?search={keywords}&limit={entry_count}
+### GET v1/logs/{file}?search={search}&limit={limit}
 Retrieve the contents of the specified file located within /var/log.  The contents will be returned in reverse chronological order with most recent events appearing first.
 
 |argument|description|required|default|
 |--------|-----------|--------|-------|
 | file | the filename within /var/log to retrieve | yes | n/a|
-| keywords | the keywords that must be present within a log line in order for it to be returned | no | return all lines |
-| entry_count | the maximum number of entries to return | no | all |
+| search | the keywords that must be present within a log line in order for it to be returned | no | return all lines |
+| limit | the maximum number of entries to return | no | all |
 
 | header | description | required | default |
 |--------|-------------|----------|---------|
@@ -47,15 +47,31 @@ Retrieve the contents of the specified file located within /var/log.  The conten
 200 OK:
 
 ```json
-{
-    "file":"system.log",
-    "host":"Kosm.local",
-    "logs": [
-        ...
-    ]
-}
-``````
+[
+    {
+        "file":"system.log",
+        "host":"Kosm.local",
+        "log": "message"
+    },
+    ...
+]
+```
+
+400 Bad Request:
+
+* returned if limit is supplied and it isnt a positive integer
+
 
 #### Examples
 
-TBD
+Request an entire log in html format:
+
+```bash
+curl http://127.0.0.1:8080/v1/logs/dpkg.log -H "Accept: text/html" -H "Authorization: Basic YWRtaW46Y3JpYmw="
+```
+
+Request the lastest 10 log lines:
+
+```bash
+curl http://127.0.0.1:8080/v1/logs/dpkg.log\?limit\=10 -H "Authorization: Basic YWRtaW46Y3JpYmw=" | jq .
+```
