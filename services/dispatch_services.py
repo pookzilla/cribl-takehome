@@ -17,7 +17,7 @@ class DispatchService:
         def make_url(server):
             params = {}
             if search is not None:
-                params['search'] = search
+                params['search'] = ','.join(search)
             if limit is not None:
                 params['limit'] = limit
 
