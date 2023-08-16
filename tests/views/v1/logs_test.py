@@ -28,7 +28,7 @@ log 10
     f.write(log_content)
     f.close()
 
-    # also make a file in the root so we can verify that we dont allow 
+    # also make a file in the root so we can verify that we dont allow
     # directory escape
     f = open(f"{log_parent_dir}/file_i_want_to_steal", "a")
     f.write("")
@@ -76,7 +76,7 @@ def test_get_logs_failure__auth(client):
 
 def test_get_logs_failure__bad_path(client):
     """
-    Verifies request generate a 404 if you try to escape the directory by 
+    Verifies request generate a 404 if you try to escape the directory by
     providing "../**" files
     """
     response = client.get(

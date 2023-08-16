@@ -2,30 +2,10 @@ import html
 import json
 from flask import Blueprint, abort, request
 from flask_accept import accept_fallback
-from flask_httpauth import HTTPBasicAuth
-from werkzeug.security import generate_password_hash, check_password_hash
-
+from views.v1 import auth
 from services.log_services import LogService
 
 views = Blueprint('logs', __name__)
-
-"""
-Support hard-coded credential authorization.  In the real deal maybe we'd be
-considering host password verification + permissions checks.  This could go
-right down to the file level but for the sake of this demo we'll KISS.
-"""
-auth = HTTPBasicAuth()
-
-users = {
-    "admin": generate_password_hash("cribl")
-}
-
-
-@auth.verify_password
-def verify_password(username, password):
-    if username in users and \
-            check_password_hash(users.get(username), password):
-        return username
 
 
 """
@@ -87,6 +67,23 @@ def logs_json(file):
         yield "]"
     return json_wrapper(), {"Content-Type": "application/json"}
 
+
+@logs_json.support("application/stream+json")
+@auth.login_required
+def logs_json_stream(file):
+    result = generate_logs(file)
+    if not result:
+        abort(404)
+
+    def json_wrapper():
+
+        for line in result.logs:
+            yield json.dumps({
+                "host": result.host,
+                "file": result.file,
+                "log": line
+            }) + "\n"
+    return json_wrapper(), {"Content-Type": "application/stream+json"}
 
 @logs_json.support("text/html")
 @auth.login_required

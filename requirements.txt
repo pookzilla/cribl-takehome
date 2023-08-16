@@ -1,4 +1,6 @@
 Flask
 flask-accept
 flask_httpauth
+flask[async]
 pytest
+aiohttp

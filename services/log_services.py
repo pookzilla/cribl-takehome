@@ -66,7 +66,7 @@ def load_logs(filename, search, limit):
 
 def reverse_file(file):
     """
-    Seeks the end of the file and walks backwards in buffered chunks, yielding 
+    Seeks the end of the file and walks backwards in buffered chunks, yielding
     the current buffer.
     """
     file.seek(0, os.SEEK_END)
@@ -82,7 +82,7 @@ def reverse_file(file):
 
 def reverse_lines(file):
     """
-    Examines buffers in reverse order for a given file, yielding lines as they 
+    Examines buffers in reverse order for a given file, yielding lines as they
     are discovered.
     """
     current_line = ''
